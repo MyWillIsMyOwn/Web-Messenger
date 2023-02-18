@@ -1,0 +1,671 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main {
+    padding: 0;
+    background: black;
+    width: 100%;
+    margin: 0;
+    height: 100vh;
+}
+.main_div {
+    height: 100%;
+    min-height: 250px;
+    width: 100%;
+    user-select: none;
+    display: flex;
+    background: black;
+}
+
+
+
+/* ////////////////////////////////// Chat options and profile photo ////////////////////////////////// */
+.main_div .tool_panel {
+    height: 100%;
+    width:75px;
+    min-width: 75px;
+}
+.main_div .tool_panel .tools {
+    width: 100%;
+    height: calc(100% - 80px);
+    background: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+}
+.main_div .tool_panel .tools .chats{
+    width: 80%;
+    height: 7%;
+    min-height: 60px;
+    margin-top: 10%;
+}
+.main_div .tool_panel .tools .chats.checked{
+    background: #5a5a5a;
+}
+.main_div .tool_panel .tools .chats img{
+    width: 60px;
+    height: 60px;
+}
+.main_div .tool_panel .tools .ignored{
+    width: 80%;
+    height: 7%;
+    min-height: 60px;
+    margin-top: 10%;
+}
+.main_div .tool_panel .tools .ignored.checked{
+    background: #5a5a5a;
+}
+.main_div .tool_panel .tools .ignored img{
+    width: 60px;
+    height: 60px;
+}
+
+.main_div .tool_panel .profile{
+    width: 100%;
+    height: 80px;
+    min-height: 60px;
+    background: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main_div .tool_panel .profile .profile_picture {
+  width: 80%;
+  height: 7%;
+  min-height: 60px;
+  border-radius: 10%;
+}
+.main_div .tool_panel .profile .profile_picture img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+
+
+/* ////////////////////////////////// Users list ////////////////////////////////// */
+.main_div .users_panel {
+    height: 100%;
+    min-width: 200px;
+    max-width:40%;
+    overflow: auto;
+}
+.main_div .users_panel .search {
+    width: 100%;
+    height: 15%;
+    min-height: 125px;
+    background: black;
+}
+.main_div .users_panel .search .info{
+    width: 100%;
+    height: 15%;
+    min-height: 85px;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main_div .users_panel .search .type{
+    width: 100%;
+    min-height: 40px;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main_div .users_panel .search .type .text_field{
+    height: 70%;
+    max-height: 250px;
+    width: 95%;
+    margin-left: 10px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    resize: none;
+    border-color: Transparent; 
+    outline: none;
+    background: black;
+}
+.main_div .users_panel .users_display {
+    width: 100%;
+    height: 84%;
+    background: black;
+}
+.main_div .users_panel .users_display .hidden {
+    display: none;
+}
+.main_div .users_panel .users_display .user{
+    width: 100%;
+    height: 68px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main_div .users_panel .users_display .user.highligh {
+    background: yellow;
+    }
+
+.main_div .users_panel .users_display .user.hide {
+display: none;
+}
+
+.main_div .users_panel .users_display .user .user_container{
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    background: black;
+    display: flex;
+    align-items: center;
+}
+.main_div .users_panel .users_display .user .user_container .profile_picture{
+    height: 100%;
+    width: 5%;
+    min-width: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .main_div .users_panel .users_display .user .user_container .profile_picture img{
+    width: 80%;
+    min-height: 80%;
+    border-radius: 50%;
+  }
+  .main_div .users_panel .users_display .user .user_container .user_details{
+    width:100%;
+    table-layout:fixed;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
+  }
+
+  .main_div .users_panel .users_display .user .user_container .user_details .user_nickname{
+    color: white;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+  }
+
+  .main_div .users_panel .users_display .user .user_container .user_details .last_message{
+    color: white;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+  }
+
+
+
+/* ////////////////////////////////// Resizer ////////////////////////////////// */
+.main_div .resizer {
+    cursor: col-resize;
+    height: 100%;
+    width: 1%;
+    max-width: 3px;
+    background: white;
+}
+
+
+
+/* ////////////////////////////////// Clicked user details ////////////////////////////////// */
+.main_div .messages_panel {
+    position: relative;
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+    width:30%;
+    flex:1;
+}
+.main_div .messages_panel .user_info {
+    width: 100%;
+    height: 8%;
+    min-height: 75px;
+    background: black;
+    display: flex;
+}
+.main_div .messages_panel .user_info .profile_picture{
+  height: 100%;
+  width: 7%;
+  min-width: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main_div .messages_panel .user_info .profile_picture img{
+  width: 60px;
+  min-height: 60px;
+  border-radius: 50%;
+}
+.main_div .messages_panel .user_info .profile_name{
+  height: 100%;
+  width: 86%;
+  display: flex;
+  align-items: center;
+  background: black;
+}
+.main_div .messages_panel .user_info .profile_name span{
+  margin-left: 30px;
+}
+
+.main_div .messages_panel .user_info .profile_options{
+  height: 100%;
+  width: 7%;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+.main_div .messages_panel .user_info .profile_options img{
+    width: 50px;
+    height: 50px;
+}
+
+
+
+/* ////////////////////////////////// Clicked user settings panel ////////////////////////////////// */
+.main_div .messages_panel .user_info .user_settings_window{
+    height: 250px;
+    width: 200px;
+    background-color: gray;
+    position: absolute;
+    top: 88px;
+    right: 10px;
+    border-radius: 10px;
+    border: solid;
+    border-color: white;
+}
+.main_div .messages_panel .user_info .user_settings_window.height{
+    height: calc(100% - 154px);
+    width: 200px;
+    min-width: 70px;
+    background-color: gray;
+    position: absolute;
+    top: 88px;
+    right: 10px;
+    border-radius: 10px;
+    border: solid;
+    border-color: white;
+    overflow-y: auto;
+}
+.main_div .messages_panel .user_info .user_settings_window.width{
+    height: 250px;
+    width: calc(100% - 30px);
+    min-width: 70px;
+    background-color: gray;
+    position: absolute;
+    top: 88px;
+    right: 10px;
+    border-radius: 10px;
+    border: solid;
+    border-color: white;
+}
+
+.main_div .messages_panel .user_info .user_settings_window.small{
+    height: calc(100% - 154px);
+    width: calc(100% - 30px);
+    min-width: 70px;
+    background-color: gray;
+    position: absolute;
+    top: 88px;
+    right: 10px;
+    border-radius: 10px;
+    border: solid;
+    border-color: white;
+    overflow: auto;
+}
+.main_div .messages_panel .user_info .user_settings_window::before{
+    content: "";
+    position: absolute;
+    right: 11.7%;
+    top: -26px; 
+    border-left: 13px solid transparent;
+    border-bottom: 26px solid gray;
+    border-right: 13px solid transparent;
+    overflow: auto;
+}
+.main_div .messages_panel .user_info .user_settings_window .profile_view{
+    width: 100%;
+    height: 150px;
+    background-color: gray;
+    border-radius: 10px;
+}
+.main_div .messages_panel .user_info .user_settings_window .profile_view .picture{
+    width: 100%;
+    height: 100px;
+    background-color: gray;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main_div .messages_panel .user_info .user_settings_window .profile_view .picture .photo{
+    width: 65px;
+    height: 65px;
+    background-color: rgb(209, 209, 22);
+}
+.main_div .messages_panel .user_info .user_settings_window .profile_view .name{
+    width: 100%;
+    height: 50px;
+    background-color: gray;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main_div .messages_panel .user_info .user_settings_window .settings{
+    width: 100%;
+    height: 100px;
+    background-color: gray;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main_div .messages_panel .user_info .user_settings_window .settings .status{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+}
+
+
+
+/* ////////////////////////////////// Logged user settings panel ////////////////////////////////// */
+.main_div .tool_panel .settings_window{
+    height: 200px;
+    width: 200px;
+    background-color: black;
+    position: absolute;
+    bottom: 100px;
+    left: 0px;
+    border-radius: 10px;
+    border: solid;
+    border-color: white;
+}
+.main_div .tool_panel .settings_window.height{
+    height: calc(100% - 100px);
+    width: 200px;
+    min-width: 200px;
+    background-color: black;
+    position: absolute;
+    bottom: 80px;
+    left: 0px;
+    border-radius: 10px;
+    border: solid;
+    border-color: white;
+    overflow-y: auto;
+}
+.main_div .tool_panel .settings_window::before{
+    content: "";
+    position: absolute;
+    left: 11%;
+    bottom: -26px; 
+    border-left: 13px solid transparent;
+    border-top: 26px solid black;
+    border-right: 13px solid transparent;
+    overflow: y;
+}
+.main_div .tool_panel .settings_window .settings .change_photo{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.main_div .tool_panel .settings_window .settings .change_photo_view{
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    left: 50px;
+    top: 50%;
+    background: red;
+}
+
+
+
+.main_div .tool_panel .settings_window .settings .change_password{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main_div .tool_panel .settings_window .settings .delete_account{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main_div .tool_panel .settings_window .logout{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+
+
+/* ////////////////////////////////// Separator and messages field ////////////////////////////////// */
+.main_div .messages_panel .separator {
+    width: 100%;
+    height: 1%;
+    max-height: 3px;
+    background: white;
+}
+.main_div .messages_panel .messages {
+    width: 100%;
+    flex: 1;
+    background: black;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column-reverse;
+    overflow: auto;
+}
+.main_div .messages_panel .messages .message{
+    width: 100%;
+    min-height: 30px;
+    margin-bottom: 3px;
+    display: inline-block;
+    background: black; 
+    
+    /* overflow: auto; */
+}
+.main_div .messages_panel .messages .message .sent{
+    min-height: 30px;
+    max-width: 55%;
+
+    float: right;
+    background: blue; 
+    color: white;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 20px;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+    word-break: break-all;
+    overflow: auto;
+    
+}
+.main_div .messages_panel .messages .message .received{
+    min-height: 28px;
+    max-width: 55%;
+    float: left;
+    background: gray;
+    color: white;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 20px;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+    word-break: break-all;
+    overflow: auto;
+}
+
+
+
+/* ////////////////////////////////// Writing and sending message ////////////////////////////////// */
+.main_div .messages_panel .message_type {
+    width: 100%;
+    min-height: 40px;
+    max-height: 300px;
+    background: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main_div .messages_panel .message_type .message_content{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    flex:1;
+    background: black;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    display: flex;
+    align-items: center;
+}
+.main_div .messages_panel .message_type 
+.message_content .text_field{
+    height: 70%;
+    min-height: 20px;
+    max-height: 250px;
+    width: 95%;
+    margin-left: 10px;
+    margin-right: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    resize: none;
+    border-color: Transparent; 
+    outline: none;
+    background: black;
+    overflow: auto;
+}
+.main_div .messages_panel .message_type 
+.message_content img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: black;
+}
+.main_div .messages_panel .message_type .send_button{
+    height: 90%;
+    width: 70px;
+    background: black;
+    margin-bottom: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main_div .messages_panel .message_type .send_button input{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: black;
+}
+/* ////////////////////////////////// Login and register ////////////////////////////////// */
+.container{
+    margin-top: 300px;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    max-width: 500px;
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 25px;
+    background: black;
+}
+.container .heading{
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+    text-align: center;
+    padding: 0 0 20px 0;
+}
+
+.container form .card-details{
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+form .card-details .card-box{
+    width: calc(100%/2-20px);
+    margin-bottom: 15px;
+}
+.card-details .card-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.card-details .card-box .form-control{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+form .button{
+    text-align: center;
+}
+form .button input{
+    padding: 10px 0;
+    margin-top: 10px;
+    height: 5%;
+    width: 50%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #71687C, black);
+}
+
+
+
+@media (max-width: 500px){
+    .container{
+        max-width: 100%;
+    }
+    form .card-details .card-box{
+        margin-bottom: 15px;
+        width: 99%
+    }
+    .container form .card-details{
+        max-height: 160px;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+}

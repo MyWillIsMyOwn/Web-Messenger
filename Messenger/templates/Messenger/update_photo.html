@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/update_photo.css'%}">
+<div class="main-content">
+    <div class="heading">Change Photo</div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="photo">
+            <div class="button">
+                <input id="files" required type="file" name="Browser"
+                    accept="image/png, image/jpeg, image/jpg, image/webp">
+            </div>
+            <div class="buttons">
+                <div class="button">
+                    <a href="{% url 'home'%}"><input type="button" name="Back" , value="Back"></a>
+                </div>
+                <div class="button">
+                    <input type="submit" name="Change" , value="Change">
+                </div>
+            </div>
+    </form>
+</div>

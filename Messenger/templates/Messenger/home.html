@@ -1,0 +1,224 @@
+{% load static %}
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css'%}">
+    <title>Messenger</title>
+</head>
+
+<body>
+    <div id="main_div" class="main_div">
+        <div class="tool_panel">
+            <div class="tools">
+                <div class="chats checked" id="normal">
+                    <img src="{%static 'images/normal.png'%}" alt="messages" class="messages_icon">
+                </div>
+                <div class="ignored" id="blocked">
+                    <img src="{%static 'images/ignored.png'%}" alt="ignored" class="messages_icon">
+                </div>
+            </div>
+            <div class="profile">
+                <div class="profile_picture" id="user_profile_picture">
+
+                    {% if request.user.profile.profile_photo %}
+                    <img src="{{ request.user.profile.profile_photo.url }}" alt="Xd" class="pic" id="kurwa">
+                    {% else %}
+                    <img src="{%static 'images/default_photo.jpg'%}" alt="Xd" class="pic" id="kurwa">
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="settings_window" id="settings_window" style="display: none;">
+                <div class="settings">
+                    <a href="{% url 'update_photo' %}">
+                        <div class="change_photo"><span style="color: white; font-size: large;">Change profile
+                                photo</span>
+                    </a>
+
+                </div>
+                <a href="{%url 'change_password'%}">
+                    <div class="change_password"><span style="color: white; font-size: large;">Change password</span>
+                </a>
+
+            </div>
+            <div class="delete_account"><span style="color: white; font-size: large;">Delete account</span>
+            </div>
+        </div>
+        <div class="logout"><a href="{% url 'logout' %}"><span style="color: white; font-size: large;">Logout</span></a>
+        </div>
+    </div>
+    </div>
+
+    <div class="users_panel" style="width: 400px;">
+        <div class="search">
+            <div class="info">Chats</div>
+            <div class="type">
+                <textarea class="text_field" name="" id="search_here" rows="1" placeholder="Search..."
+                    style="color: white;"></textarea>
+            </div>
+        </div>
+        <!-- this panel will show users and normal ones -->
+        <div class="users_display infinite-container" id="box">
+            <div id="chats">
+                {% for chat in chats %}
+                <div class="user infinite-item" data-username="{{chat.username}}">
+                    <div class="user_container">
+                        <div class="profile_picture">
+                            <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+                        </div>
+                        <div class="user_details">
+                            <div class="user_nickname" id="user">{{chat.username}}</div>
+                            <div hidden class="user_id">{{chat.id}}</div>
+                            <div class="last_message"></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="hidden" id="blocked_list">
+                {% for chat in blocked_list %}
+                <div class="user infinite-item" data-username="{{chat.username}}">
+                    <div class="user_container">
+                        <div class="profile_picture">
+                            <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+                        </div>
+                        <div class="user_details">
+                            <div class="user_nickname" id="user">{{chat.username}}</div>
+                            <div hidden class="user_id">{{chat.id}}</div>
+                            <div class="last_message">BLOCKED</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <span style="color: white;" id="more" hidden>More users</span>
+            <div style="display: none;" id="unknown">
+                {% for chat in unknown_users %}
+                <div class="user infinite-item" data-username="{{chat.username}}">
+                    <div class="user_container">
+                        <div class="profile_picture">
+                            <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+                        </div>
+                        <div class="user_details">
+                            <div class="user_nickname" id="user">{{chat.username}}</div>
+                            <div hidden class="user_id">{{chat.id}}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="resizer" id="dragMe"></div>
+
+    <div class="messages_panel">
+        <div class="user_info">
+            <div class="profile_picture">
+                <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+            </div>
+            <div class="profile_name">
+                <span style="color: white; font-size: large;" id="current_user"></span>
+            </div>
+            <div class="profile_options" id="profile_options">
+                <img src="{%static 'images/options.png'%}" alt="options" class="options">
+            </div>
+
+            <div class="user_settings_window" id="user_settings_window" style="display: none;">
+                <div class="profile_view">
+                    <div class="picture">
+                        <div class="photo"></div>
+                    </div>
+                    <div class="name">
+                        <span style="color: white; font-size: large;" id="current_user_in_settings"></span>
+                    </div>
+                </div>
+
+                <div class="settings">
+                    <form method="POST" action="{% url 'change_status' %}">
+                        {% csrf_token %}
+                        <input id="user_id_to_pass" hidden type="text" name="dane" value="">
+                        <input class="status" id="status" type="submit" value="xd">
+                    </form>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="separator"></div>
+        <div class="messages" id="messages">
+            <!-- here will be for loop through filtred messages-->
+
+            {% for message in all_messages reversed %}
+
+            {% if message.sender == request.user.id %}
+            <div class="message" style="display: none;">
+                <div class="sent body">You: {{message.body}}</div>
+                <!-- <div class="sent body"><img src="{{message.photo}}" alt="">{{message.photo}}</div> -->
+                <div class="sent" style="display: none;">{{message.receiver}}</div>
+
+            </div>
+            {% endif %}
+
+            {% if message.receiver == request.user.id %}
+            <div class="message" style="display: none;">
+                <div class="received body">{{message.body}}</div>
+                <div class="received" style="display: none;">{{message.sender}}</div>
+
+            </div>
+            {% endif %}
+
+            {% endfor %}
+
+
+
+        </div>
+        <form action="{% url 'send_message' %}" method="POST">
+            {% csrf_token %}
+            <div class="message_type">
+
+                <div class="message_content">
+                    <input type="text" name="receiver" id="receiver" value="" hidden>
+                    <textarea name="msg" class="text_field" name="" id="" rows="1" placeholder="Write message..."
+                        style="color: white;" oninput="auto_height(this)"></textarea>
+                    <img src="{%static 'images/photoicon.png'%}" alt="photo_icon" class="photo">
+                </div>
+                <div class="send_button">
+                    <input type="image" src="{%static 'images/sendbutton.png'%}">
+                    <!-- <img src="{%static 'images/sendbutton.png'%}" alt="send_icon" class="send"> -->
+                </div>
+            </div>
+        </form>
+
+    </div>
+    </div>
+</body>
+<script>
+    //resize textarea element
+    function auto_height(elem) {
+        elem.style.height = "1px";
+        elem.style.height = (elem.scrollHeight) + "px";
+    }
+</script>
+<script>
+    // var data = '{{blocked_list}}'
+
+    // console.log(data)
+
+</script>
+<script src="{% static '/js/home.js' %}"></script>
+<!-- <script type="text/javascript">
+    let url = `ws://${window.location.host}/ws/socket-server/`
+
+    const chatSocket = new WebSocket(url)
+
+    chatSocket.onmessage = function (e) {
+        let data = JSON.parse(e.data)
+        console.log('Data:', data)
+    }
+</script> -->
+
+</html>

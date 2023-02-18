@@ -1,0 +1,397 @@
+{% load static %}
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css'%}">
+    <title>Messenger</title>
+</head>
+
+<body>
+    <div id="main_div" class="main_div">
+        <div class="tool_panel">
+            <div class="tools">
+                <div class="chats checked" id="normal">
+                    <img src="{%static 'images/normal.png'%}" alt="messages" class="messages_icon">
+                </div>
+                <div class="ignored" id="blocked">
+                    <img src="{%static 'images/ignored.png'%}" alt="ignored" class="messages_icon">
+                </div>
+            </div>
+            <div class="profile">
+                <div class="profile_picture" id="user_profile_picture">
+
+                    {% if request.user.profile.profile_photo %}
+                    <img src="{{ request.user.profile.profile_photo.url }}" alt="Xd" class="pic">
+                    {% else %}
+                    <img src="{%static 'images/default_photo.jpg'%}" alt="Xd" class="pic">
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="settings_window" id="settings_window" style="display: none;">
+                <div class="settings">
+                    <a href="{% url 'update_photo' %}">
+                        <div class="change_photo"><span style="color: white; font-size: large;">Change profile
+                                photo</span>
+                    </a>
+
+                </div>
+                <a href="{%url 'change_password'%}">
+                    <div class="change_password"><span style="color: white; font-size: large;">Change password</span>
+                </a>
+
+            </div>
+            <div class="delete_account"><span style="color: white; font-size: large;">Delete account</span>
+            </div>
+        </div>
+        <div class="logout"><a href="{% url 'logout' %}"><span style="color: white; font-size: large;">Logout</span></a>
+        </div>
+    </div>
+    </div>
+
+    <div class="users_panel" style="width: 400px;">
+        <div class="search">
+            <div class="info">Chats</div>
+            <div class="type">
+                <textarea class="text_field" name="" id="search_here" rows="1" placeholder="Search..."
+                    style="color: white;"></textarea>
+            </div>
+        </div>
+        <!-- this panel will show users and normal ones -->
+        <div class="users_display infinite-container" id="box">
+            <div id="chats">
+                {% for chat in chats %}
+                <div class="user infinite-item" data-username="{{chat.username}}" id="{{chat.id}}">
+                    <div class="user_container">
+                        <div class="profile_picture">
+                            <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+                        </div>
+                        <div class="user_details">
+                            <div class="user_nickname">{{chat.username}}</div>
+                            <div class="user_id" style="color: white;">{{chat.id}}</div>
+                            <div class="last_message"></div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+                <!-- <div class="user infinite-item" data-username="{{chat.username}}">
+                    <div class="user_container">
+                        <div class="profile_picture">
+                            <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+                        </div>
+                        <div class="user_details">
+                            <div class="user_nickname" id="user">{{chat.username}}</div>
+                            <div hidden class="user_id">{{chat.id}}</div>
+                            <div class="last_message"></div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="hidden" id="blocked_list">
+                {% for chat in blocked_list %}
+                <div class="user infinite-item" data-username="{{chat.username}}">
+                    <div class="user_container">
+                        <div class="profile_picture">
+                            <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+                        </div>
+                        <div class="user_details">
+                            <div class="user_nickname" id="user">{{chat.username}}</div>
+                            <div hidden class="user_id">{{chat.id}}</div>
+                            <div class="last_message">BLOCKED</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <span style="color: white;" id="more" hidden>More users</span>
+            <div style="display: none;" id="unknown">
+                {% for chat in unknown_users %}
+                <div class="user infinite-item" data-username="{{chat.username}}">
+                    <div class="user_container">
+                        <div class="profile_picture">
+                            <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+                        </div>
+                        <div class="user_details">
+                            <div class="user_nickname" id="user">{{chat.username}}</div>
+                            <div hidden class="user_id">{{chat.id}}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="resizer" id="dragMe"></div>
+
+    <div class="messages_panel">
+        <div class="user_info">
+            <div class="profile_picture">
+                <img src="{%static 'images/w1.webp'%}" alt="Xd" class="pic">
+            </div>
+            <div class="profile_name">
+                <span style="color: white; font-size: large;" id="current_user"></span>
+            </div>
+            <div class="profile_options" id="profile_options">
+                <img src="{%static 'images/options.png'%}" alt="options" class="options">
+            </div>
+
+            <div class="user_settings_window" id="user_settings_window" style="display: none;">
+                <div class="profile_view">
+                    <div class="picture">
+                        <div class="photo"></div>
+                    </div>
+                    <div class="name">
+                        <span style="color: white; font-size: large;" id="current_user_in_settings"></span>
+                    </div>
+                </div>
+
+                <div class="settings">
+                    <form method="POST" action="{% url 'change_status' %}">
+                        {% csrf_token %}
+                        <input id="user_id_to_pass" hidden type="text" name="dane" value="">
+                        <input class="status" id="status" type="submit" value="xd">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="separator"></div>
+        <div id="chat-log" class="messages">
+            <!-- {% for msg in messages reversed %}
+
+            <div class="message">
+                {% if msg.author.id == logged_user.id %}
+                <div class="sent body">{{msg.body}}</div>
+
+                {% else %}
+                <div class="received body">{{msg.body}}</div>
+                {% endif %}
+
+            </div>
+            {% endfor %} -->
+        </div>
+        <div class="message_type">
+            <div class="message_content">
+                <input type="text" name="receiver" id="receiver" value="" hidden>
+                <textarea name="msg" class="text_field" name="" id="chat-message-input" rows="1"
+                    placeholder="Write message..." style="color: white;" oninput="auto_height(this)"></textarea>
+                <img src="{%static 'images/photoicon.png'%}" alt="photo_icon" class="photo">
+            </div>
+            <div class="send_button">
+                <input id="chat-message-submit" type="image" src="{%static 'images/sendbutton.png'%}">
+            </div>
+        </div>
+
+    </div>
+    </div>
+</body>
+<!-- <script>
+    //resize textarea element
+    function auto_height(elem) {
+        elem.style.height = "1px";
+        elem.style.height = (elem.scrollHeight) + "px";
+    }
+</script> -->
+{{request.user.id|json_script:"user_id"}}
+
+<!-- <script src="{% static 'js/reconnecting-websocket.js' %}"></script> -->
+{{ room_name|json_script:"room-name" }}
+<!-- <script>
+    const chatLog = document.querySelector('#chat-log')
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + roomName
+        + '/'
+    );
+    console.log(chatSocket)
+
+    chatSocket.onopen = function (e) {
+        console.log('onopen', e)
+
+        console.log(user_id)
+        chatSocket.send(JSON.stringify({
+            'command': 'preload_users',
+        }));
+
+        // THIS WORKS
+        chatSocket.send(JSON.stringify({
+            'command': 'fetch_messages',
+        }));
+    }
+    chatSocket.onerror = function (e) {
+        console.log('error', e)
+    }
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        const loggedInUserId = JSON.parse(document.getElementById('user_id').textContent)
+        // preloading messages if logged user requested it, otherwise it preloads no matter who refresh web, should be fixed
+        // possibly can make indivitual room for each user to let him refresh data or something
+        if (data['messages'] && data['logged_user'] == loggedInUserId) {
+            preload_messages(data, loggedInUserId)
+        }
+        // displaying message
+        if (data["message"]) {
+            display_message(data)
+
+        }
+        // if (data['all_users'] && data['logged_user'] == loggedInUserId) {
+
+        //     display_users(data)
+        //     console.log('printed')
+        //     console.log(document.readyState)
+        //     choose_user()
+
+        // }
+        if (data['choosen_user']) {
+            console.log('choosen')
+            console.log(data)
+            console.log(data['chat_id'])
+            window.location.pathname = "/chat/" + data['chat_id']
+        }
+    };
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+        console.log('closed', e)
+    };
+    /////////////////////////////    Sending message to current chat  ////////////////////////////
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        // send data to backend
+        chatSocket.send(JSON.stringify({
+            'command': 'new_message',
+            'message': message,
+        }));
+        messageInputDom.value = '';
+    };
+
+
+    /////////////////////////////    Load newest message  ////////////////////////////
+    function display_message(data) {
+        message = data['message']
+        const messageElement = document.createElement('div')
+        const userId = message['author']
+        const loggedInUserId = JSON.parse(document.getElementById('user_id').textContent)
+        messageElement.className = 'message'
+
+        if (userId === loggedInUserId) {
+            const messageSent = document.createElement('div')
+            messageSent.innerText = message.body
+            messageSent.classList.add('sent', 'body')
+            messageElement.appendChild(messageSent)
+        } else {
+            const messageReceived = document.createElement('div')
+            messageReceived.innerText = message.body
+            messageReceived.classList.add('received', 'body')
+            messageElement.appendChild(messageReceived)
+        }
+
+        chatLog.prepend(messageElement)
+    }
+    /////////////////////////////    Preload chat messages  ////////////////////////////
+    function preload_messages(data, loggedInUserId) {
+        // console.log('tutaj')
+        for (const message of data['messages']['messages']) {
+            const messageElement = document.createElement('div')
+            messageElement.className = 'message'
+            if (loggedInUserId === message['author']) {
+                const messageSent = document.createElement('div')
+                messageSent.innerText = message.body
+                messageSent.classList.add('sent', 'body')
+                messageElement.appendChild(messageSent)
+            } else {
+                const messageReceived = document.createElement('div')
+                messageReceived.innerText = message.body
+                messageReceived.classList.add('received', 'body')
+                messageElement.appendChild(messageReceived)
+            }
+            chatLog.appendChild(messageElement)
+        }
+    }
+    /////////////////////////////    Display users   ////////////////////////////
+    function display_users(data) {
+        const all_users = data['all_users']['users']
+        const chat_list = document.getElementById('chats')
+        console.log(all_users)
+        for (const user of all_users['chats']) {
+            // console.log(user)
+            const userElement = document.createElement('div')
+            userElement.classList.add('user', 'infinite-item')
+            userElement.setAttribute('data-username', user['user_username'])
+            userElement.setAttribute('id', user['user_id'])
+
+
+            const user_container = document.createElement('div')
+            user_container.classList.add('user_container')
+
+            const profile_picture = document.createElement('div')
+            profile_picture.classList.add('profile_picture')
+
+            const photo = document.createElement('img')
+            photo.src = "{%static 'images/w1.webp'%}"
+
+            const user_details = document.createElement('div')
+            user_details.classList.add('user_details')
+
+            const user_nickname = document.createElement('div')
+            user_nickname.classList.add('user_nickname')
+            user_nickname.innerText = user['user_username']
+
+            const user_id = document.createElement('div')
+            user_id.classList.add('user_id')
+            user_id.innerText = user['user_id']
+            user_id.style.color = 'white'
+
+            const last_message = document.createElement('div')
+            last_message.classList.add('last_message')
+
+
+            profile_picture.appendChild(photo)
+            user_container.appendChild(profile_picture)
+            user_details.appendChild(user_nickname)
+            user_details.appendChild(user_id)
+            user_details.appendChild(last_message)
+            user_container.appendChild(user_details)
+            userElement.appendChild(user_container)
+            chat_list.prepend(userElement)
+
+        }
+    }
+
+    /////////////////////////////    Choose chat  ////////////////////////////
+    function choose_user(flag) {
+        const chat_conatiner = document.getElementById("chats");
+        const chat_nodes = chat_conatiner.getElementsByClassName('user');
+
+        for (const element of chat_nodes) {
+            document.getElementById(element.id).onclick = function () {
+                console.log('click')
+                chatSocket.send(JSON.stringify({
+                    'command': 'choose_chat',
+                    'user': Number(element.id),
+                }));
+            }
+
+        }
+
+
+    }
+</script> -->
+<!-- <script src="{% static '/js/home2.js' %}"></script> -->
+
+</html>

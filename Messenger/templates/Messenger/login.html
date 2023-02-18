@@ -1,0 +1,35 @@
+{% load static %}
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/account.css'%}">
+    <div class="container">
+        <div class="heading">Log in</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="card-details">
+                <div class="card-box">
+                    <span class="details">Username</span>
+                    {{user_login_form.username}}
+                </div>
+                <div class="card-box">
+                    <span class="details">Password</span>
+                    {{user_login_form.password}}
+                </div>
+            </div>
+            <a href="{% url 'register_page' %}">Doesn't have an account? Create one right here!</a>
+            {% for message in messages %}
+            <p id="messages">{{message}}</p>
+            {% endfor %}
+            <div class="button">
+                <input type="submit" name="Log into" , value="Log in">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
